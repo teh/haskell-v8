@@ -46,7 +46,7 @@ v8_result * eval_in_context(char *str, V8Ref<Context> *c) {
   HandleScope handle_scope(isolate);
   Local<Context> context = Local<Context>::New(isolate, c->handle);
   Context::Scope context_scope(context);
-  Handle<String> source = String::New(str);
+  Handle<String> source = String::NewFromUtf8(isolate, str);
   Handle<Value> result;
 
   v8_result *rv = (v8_result *)malloc(sizeof(v8_result));
@@ -105,5 +105,3 @@ char * v8_to_string(V8Object *o) {
   str->WriteUtf8(rv);
   return rv;
 }
-
-

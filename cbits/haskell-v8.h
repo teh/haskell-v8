@@ -17,11 +17,11 @@ typedef struct {
 isolate_data * get_isolate_data(Isolate *i) {
   isolate_data *data;
 
-  if ((data = (isolate_data *)i->GetData()) == NULL) {
+  if ((data = (isolate_data *)i->GetData(0)) == NULL) {
     data = (isolate_data *)malloc(sizeof(isolate_data));
     data->ref_count = 0;
     data->should_dispose = 0;
-    i->SetData(data);
+    i->SetData(0, data);
   }
 
   return data;
@@ -51,9 +51,6 @@ public:
       data = get_isolate_data(isolate);
       data->ref_count--;
     }
-
-    // destroy the persistent reference to the object
-    handle.Dispose();
 
     // If haskell already freed the isolate and this was the
     // last object holding a reference to it, dispose and free the isolate
