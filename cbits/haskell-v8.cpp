@@ -26,6 +26,7 @@ void free_value(V8Object *handle) { delete handle; }
 
 
 Isolate * new_isolate() {
+  V8::Initialize();
   return Isolate::New();
 }
 
